@@ -2,15 +2,24 @@
 <h3 align="center">This repository contains a project created for school purposes</h3>
 <hr>
 
+<p align="center">This is a school project to present an online store with a working (local) database.</p>
+
 ## Technologies
 
-List of technologies used to work on the project
+List of technologies on which the project is based.
 
-<p align="center" width="100%" style="display: flex; justify-content: space-between">
-<img align="center" width="65" src="./github/icons/CSS.svg"/>
-<img align="center" width="65" src="./github/icons/HTML.svg"/>
-<img align="center" width="65" src="./github/icons/JavaScript.svg"/>
-<img align="center" width="65" src="./github/icons/NodeJS-Dark.svg"/>
-<img align="center" width="65" src="./github/icons/SQLite.svg"/>
+<p align="left">
+<img align="center" width="45" src="./github/icons/CSS.svg"/>
+<img align="center" width="45" src="./github/icons/HTML.svg"/>
+<img align="center" width="45" src="./github/icons/JavaScript.svg"/>
+<img align="center" width="45" src="./github/icons/NodeJS-Dark.svg"/>
+<img align="center" width="45" src="./github/icons/SQLite.svg"/>
 </p>
 
+## Initialization
+
+To start the program, just run the following command in the project's main file:
+
+```
+node setup.js
+```
