@@ -1,2 +1,2 @@
-<img align="center" width="280" src="./github/logo.svg"/>
+<p align="center"><img align="center" width="280" src="./github/logo.svg"/></p>
 <hr>
