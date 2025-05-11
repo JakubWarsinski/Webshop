@@ -1,0 +1,9 @@
+<% if (typeof error !== 'undefined' && error) {%>
+    <p><%= error %></p>
+<%}%>
+
+<form action="/auth/code" method="POST">
+    <label>email</label>
+    <input type="email" name="email">
+    <button type="submit">Email</button>
+</form>

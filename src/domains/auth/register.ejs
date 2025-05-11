@@ -1,0 +1,13 @@
+<% if( typeof error !== 'undefined' && error) {%>
+    <p><%= error %></p>
+<%};%>
+
+<form action="/auth/register" method="POST">
+    <label>Login:</label>
+    <input type="text" name="login" id="login">
+    <label>Email:</label>
+    <input type="email" name="email" id="email">
+    <label>Hasło:</label>
+    <input type="password" name="password" id="password">
+    <button type="submit">Login</button>
+</form>

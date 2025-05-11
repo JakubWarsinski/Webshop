@@ -1,0 +1,15 @@
+<% if (typeof code !== 'undefined' && code) {%>
+    <p><%= code %></p>
+<%}%>
+
+<% if (typeof error !== 'undefined' && error) {%>
+    <p><%= error %></p>
+<%};%>
+
+<form action="/auth/reset" method="POST">
+    <label>Kod</label>
+    <input type="text" name="code">
+    <label>Hasło</label>
+    <input type="password" name="password">
+    <button type="submit">Email</button>
+</form>
