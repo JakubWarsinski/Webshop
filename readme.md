@@ -6,11 +6,11 @@
 
 List of technologies used to work on the project
 
-<p align="center">
-<img align="center" width="80" src="./github/icons/CSS.svg"/>
-<img align="center" width="80" src="./github/icons/HTML.svg"/>
-<img align="center" width="80" src="./github/icons/JavaScript.svg"/>
-<img align="center" width="80" src="./github/icons/NodeJS-Dark.svg"/>
-<img align="center" width="80" src="./github/icons/SQLite.svg"/>
+<p align="center" width="100%" style="display: flex; justify-content: space-between">
+<img align="center" width="65" src="./github/icons/CSS.svg"/>
+<img align="center" width="65" src="./github/icons/HTML.svg"/>
+<img align="center" width="65" src="./github/icons/JavaScript.svg"/>
+<img align="center" width="65" src="./github/icons/NodeJS-Dark.svg"/>
+<img align="center" width="65" src="./github/icons/SQLite.svg"/>
 </p>
 
