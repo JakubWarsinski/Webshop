@@ -1,8 +1,6 @@
-const authQuery = require('../querys/authQuery');
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('../../sklep.db');
-const querys = require('../utils/queryHelper');
 const bcrypt = require('bcrypt');
+const queryHelper = require('../utils/queryHelper');
+
 const saltRounds = 10;
 
 const render = {
@@ -19,6 +17,14 @@ const redirect = {
     reset : '/auth/reset'
 }
 
+const userTable = {
+    table : 'Uzytkownik',
+    id : 'id_uzytkownika',
+    login : 'login',
+    password : 'haslo',
+    email : 'email'
+}
+
 /////////////////////
 //     SING IN     //
 /////////////////////
@@ -30,10 +36,13 @@ exports.loginPage = (req, res) => {
 exports.loginHandle = async (req, res) => {
     const { email, password } = req.body;
 
-    const sql = `SELECT id_uzytkownika, login, email, haslo FROM uzytkownik WHERE email = ?`;
+    const sql = `
+        SELECT ${userTable.id}, ${userTable.email}, ${userTable.login}, ${userTable.password} 
+        FROM ${userTable.table} 
+        WHERE ${userTable.email} = ?`;
 
     try {
-        const user = await querys.getSingleQuery(sql, [email]);
+        const user = await queryHelper.getSingleQuery(sql, [email]);
 
         if (!user) throw 'Podany użytkownik nie istnieje.';
 
@@ -46,7 +55,11 @@ exports.loginHandle = async (req, res) => {
             login: user.login,
         }
 
-        return res.render(render.login);
+        const returnTo = req.session.returnTo || redirect.home;
+
+        delete req.session.returnTo;
+
+        return res.redirect(returnTo);
     } catch(error) {
         return res.render(render.login, { error });   
     }
@@ -63,17 +76,23 @@ exports.registerPage = (req, res) => {
 exports.registerHandle = async (req, res) => {
     const { login, email, password } = req.body;
 
-    const select = `SELECT id_uzytkownika FROM uzytkownik WHERE email = ? OR login = ?`;
-    const insert = `INSERT INTO uzytkownik (login, email, haslo) VALUES(?, ?, ?)`;
+    const select = `
+        SELECT ${userTable.id}
+        FROM ${userTable.table} 
+        WHERE ${userTable.email} = ? OR ${userTable.login} = ?`;
+
+    const insert = `
+        INSERT INTO ${userTable.table} (${userTable.login}, ${userTable.email}, ${userTable.password}) 
+        VALUES(?, ?, ?)`;
 
     try {
-        const user = await querys.getSingleQuery(select, [email, login]);
+        const user = await queryHelper.getSingleQuery(select, [email, login]);
 
         if (user) throw 'Podany email, lub login już istnieje.';
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        await querys.runQuery(insert, [login, email, hashedPassword]);
+        await queryHelper.runQuery(insert, [login, email, hashedPassword]);
 
         return res.redirect(redirect.login);
     } catch(error) {
@@ -92,10 +111,13 @@ exports.codePage = (req, res) => {
 exports.codeHandle = async (req, res) => {
     const { email } = req.body;
 
-    const sql = `SELECT id_uzytkownika FROM uzytkownik WHERE email = ?`;
+    const sql = `
+        SELECT ${userTable.id}, ${userTable.login}, ${userTable.login}, ${userTable.password} 
+        FROM ${userTable.table} 
+        WHERE ${userTable.email} = ?`;
 
     try {
-        const user = await querys.getSingleQuery(sql, [email]);
+        const user = await queryHelper.getSingleQuery(sql, [email]);
 
         if (!user) throw 'Nie odnaleziono użytkownika z podanym e-mailem.';
 
@@ -128,16 +150,19 @@ exports.resetHandle = async (req, res) => {
     const { code, password } = req.body;
     const { id, resetCode } = req.session.reset;
 
-    sql = 'UPDATE uzytkownik SET haslo = ? WHERE id_uzytkownika = ?';
+    const sql = `
+        UPDATE ${userTable.table} 
+        SET ${userTable.password} = ? 
+        WHERE ${userTable.id} = ?`;
 
     try {
         if (code != resetCode) throw 'Podano nieprawidłowy kod.';
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-        await querys.runQuery(sql, [hashedPassword, id]);
+        await queryHelper.runQuery(sql, [hashedPassword, id]);
 
-        return res.redirect(redirect.home);
+        return res.redirect(redirect.login);
     } catch(error) {
         return res.render(render.reset, { error, code : resetCode });
     }

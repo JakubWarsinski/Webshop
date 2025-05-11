@@ -1,5 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('../../sklep.db');
+const db = new sqlite3.Database('./sklep.db');
 
 exports.getSingleQuery = (sql, input) => {
     return new Promise((resolve, reject) => {

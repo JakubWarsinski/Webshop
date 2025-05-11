@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
+const { isNotAuthenticated } = require('../utils/authorizationCheck');
 
-router.get('/login', authController.loginPage);
-router.post('/login', authController.loginHandle);
+router.get('/login', isNotAuthenticated, authController.loginPage);
+router.post('/login', isNotAuthenticated, authController.loginHandle);
 
-router.get('/register', authController.registerPage);
-router.post('/register', authController.registerHandle);
+router.get('/register', isNotAuthenticated, authController.registerPage);
+router.post('/register', isNotAuthenticated, authController.registerHandle);
 
-router.get('/code', authController.codePage);
-router.post('/code', authController.codeHandle);
+router.get('/code', isNotAuthenticated, authController.codePage);
+router.post('/code', isNotAuthenticated, authController.codeHandle);
 
-router.get('/reset', authController.resetPage);
-router.post('/reset', authController.resetHandle);
+router.get('/reset', isNotAuthenticated, authController.resetPage);
+router.post('/reset', isNotAuthenticated, authController.resetHandle);
 
 module.exports = router;
