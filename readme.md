@@ -1,4 +1,4 @@
-<p align="center"><img align="center" width="280" src="./github/logo.svg"/></p>
+<p align="center"><img align="center" max-width="280" src="./github/logo.svg"/></p>
 <h3 align="center">Project created for educational purposes</h3>
 <hr>
 
